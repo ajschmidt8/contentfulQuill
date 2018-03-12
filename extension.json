@@ -1,0 +1,6 @@
+{
+	"name": "Quill WYSIWYG Editor",
+	"id": "quill",
+	"srcdoc": "./src/index.html",
+	"fieldTypes": ["Text"]
+}

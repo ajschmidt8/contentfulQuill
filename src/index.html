@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Quill WYSIWYG Editor</title>
+	<!-- Contentful's default styles -->
+	<link rel="stylesheet" href="https://contentful.github.io/ui-extensions-sdk/cf-extension.css">
+	<!-- UI Extensions SDK -->
+	<script src="https://contentful.github.io/ui-extensions-sdk/cf-extension-api.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.5/quill.snow.min.css" />
+
+</head>
+
+<body style="min-height:200px">
+
+	<!-- Create the editor container -->
+	<div id="editor">
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.5/quill.min.js"></script>
+	<script>
+		window.contentfulExtension.init(function (extension) {
+			extension.window.startAutoResizer();
+
+			var quillElement = document.getElementById("editor");
+
+			var quillToolbarOptions = [["bold", "italic", "underline"], [{ color: [] }]];
+			var quillEditor = new Quill(quillElement, {
+				modules: { toolbar: quillToolbarOptions },
+				theme: "snow",
+				formats: ["bold", "italic", "underline", "color"]
+			});
+
+			var currentValue = extension.field.getValue() || "";
+			quillElement.firstChild.innerHTML = currentValue;
+
+			quillEditor.on("text-change", function (delta, oldDelta, source) {
+				var value = quillElement.firstChild.innerHTML;
+				extension.field.setValue(value);
+			});
+		});
+	</script>
+</body>
+
+</html>
